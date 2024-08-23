@@ -136,8 +136,7 @@ fun WeatherDetail(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp),
-                colors = CardDefaults.cardColors(Color.Transparent),
-                border = BorderStroke(width = 3.dp, color = Color.DarkGray)
+                colors = CardDefaults.cardColors(Color.DarkGray)
             ) {
                 Row(
                     modifier = Modifier
@@ -191,9 +190,8 @@ fun WeatherCard(
 ) {
     Card(
         modifier = Modifier.size(90.dp),
-        colors = CardDefaults.cardColors(colorResource(id = R.color.Aquamarine)),
+        colors = CardDefaults.cardColors(Color.LightGray),
         shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(width = 3.dp, color = Color.Gray)
     ) {
         Column(
             modifier = Modifier

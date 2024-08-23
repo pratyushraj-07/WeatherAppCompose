@@ -38,4 +38,9 @@ class WeatherViewModel(
             }
         }
     }
+
+    fun resetWeather(){
+        _weather.value = ResponseState.Empty
+    }
+
 }

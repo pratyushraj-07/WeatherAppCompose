@@ -1,8 +1,6 @@
 package com.example.weatherappcompose.screens.searchedcityscreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,11 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -51,23 +49,29 @@ import com.example.weatherappcompose.ui.WeatherViewModel
 
 @Composable
 fun SearchedCity(
+    navController: NavController,
     viewModel: WeatherViewModel
 ) {
     val weather by viewModel.weather.observeAsState()
     var city by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-    var isVisible by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.resetWeather()
+        }
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.Gray)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.bgsunset), contentDescription = "Background",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
         Column(
             modifier = Modifier
                 .statusBarsPadding(),
@@ -78,60 +82,52 @@ fun SearchedCity(
                     .fillMaxWidth()
                     .padding(top = 8.dp)
             ) {
-                if (isVisible) {
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .padding(start = 16.dp, end = 16.dp)
-                            .weight(1f),
-                        value = city,
-                        maxLines = 1,
-                        onValueChange = { city = it },
-                        shape = RoundedCornerShape(28.dp),
-                        placeholder = { Text(text = "Search City", color = Color.Black) },
-                        trailingIcon = {
-                            Row {
-                                IconButton(onClick = { city = "" }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Clear,
-                                        contentDescription = "Clear",
-                                        tint = Color.Black
-                                    )
-                                }
-                                IconButton(onClick = {
-                                    if (city.isNotEmpty()) {
-                                        viewModel.getWeather(city)
-                                        keyboardController?.hide()
-                                    } else {
-                                        isVisible = false
-                                    }
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Search,
-                                        contentDescription = "Search",
-                                        tint = Color.Black
-                                    )
-                                }
-                            }
-                        },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color.Black,
-                            focusedTextColor = Color.Black,
-                            unfocusedLabelColor = Color.Black
-                        )
+                IconButton(onClick = { navController.navigateUp() }){
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
                     )
-                } else {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        IconButton(onClick = { isVisible = true }) {
-                            Icon(
-                                imageVector = Icons.Default.Search, contentDescription = "Search",
-                                modifier = Modifier.size(40.dp)
-                            )
-                        }
-                    }
                 }
+
+                OutlinedTextField(
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp)
+                        .weight(1f)
+                        .focusRequester(focusRequester),
+                    value = city,
+                    maxLines = 1,
+                    onValueChange = { city = it },
+                    shape = RoundedCornerShape(28.dp),
+                    placeholder = { Text(text = "Search City", color = Color.Black) },
+                    trailingIcon = {
+                        Row {
+                            IconButton(onClick = { city = "" }) {
+                                Icon(
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = "Clear",
+                                    tint = Color.Black
+                                )
+                            }
+                            IconButton(onClick = {
+                                if (city.isNotEmpty()) {
+                                    viewModel.getWeather(city)
+                                    keyboardController?.hide()
+                                }
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Search",
+                                    tint = Color.Black
+                                )
+                            }
+                        }
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Black,
+                        focusedTextColor = Color.Black,
+                        unfocusedLabelColor = Color.Black
+                    )
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -156,7 +152,7 @@ fun SearchedCity(
                     WeatherDetail(result.data)
                 }
 
-                null -> {
+                null, ResponseState.Empty -> {
                     Lottie()
                 }
             }
