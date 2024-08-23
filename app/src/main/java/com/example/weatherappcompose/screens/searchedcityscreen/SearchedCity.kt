@@ -90,7 +90,10 @@ fun SearchedCity(
                         placeholder = { Text(text = "Search City", color = Color.Black) },
                         trailingIcon = {
                             Row {
-                                IconButton(onClick = { city = "" }) {
+                                IconButton(onClick = {
+                                    city = ""
+                                    viewModel.resetWeather()
+                                }) {
                                     Icon(
                                         imageVector = Icons.Default.Clear,
                                         contentDescription = "Clear",
@@ -156,8 +159,24 @@ fun SearchedCity(
                     WeatherDetail(result.data)
                 }
 
-                null -> {
-                    Lottie()
+                null, ResponseState.Empty -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 80.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        Icon(
+                            painter = painterResource(id = R.drawable.hello),
+                            contentDescription = "Search ",
+                            modifier = Modifier.size(80.dp)
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Text(
+                            text = "Search for any city",
+                            fontSize = 28.sp
+                        )
+                    }
                 }
             }
         }
