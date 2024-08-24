@@ -1,5 +1,6 @@
-package com.example.weatherappcompose.data
+package com.example.weatherappcompose.data.models
 
+//for city query
 data class WeatherModel(
     val count: String,
     val data: List<Data>

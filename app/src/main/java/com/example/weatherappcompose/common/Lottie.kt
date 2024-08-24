@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.screens.searchedcityscreen
+package com.example.weatherappcompose.common
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable

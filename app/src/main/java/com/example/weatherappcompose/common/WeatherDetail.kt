@@ -1,8 +1,7 @@
-package com.example.weatherappcompose.screens.searchedcityscreen
+package com.example.weatherappcompose.common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
@@ -35,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.WeatherModel
+import com.example.weatherappcompose.data.models.WeatherModel
 
 @Composable
 fun WeatherDetail(
@@ -136,6 +133,8 @@ fun WeatherDetail(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp),
+                //border = BorderStroke(width = 3.dp, color = Color.LightGray),
+                //colors = CardDefaults.cardColors(Color.Transparent)
                 colors = CardDefaults.cardColors(Color.DarkGray)
             ) {
                 Row(
@@ -190,8 +189,10 @@ fun WeatherCard(
 ) {
     Card(
         modifier = Modifier.size(90.dp),
-        colors = CardDefaults.cardColors(Color.LightGray),
+        //colors = CardDefaults.cardColors(colorResource(id = R.color.Aquamarine)),
+        colors = CardDefaults.cardColors(Color.Transparent),
         shape = RoundedCornerShape(8.dp),
+        //border = BorderStroke(width = 3.dp, color = Color.Gray)
     ) {
         Column(
             modifier = Modifier

@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weatherappcompose.nav_graph.Navigation
-import com.example.weatherappcompose.screens.searchedcityscreen.SearchedCity
 import com.example.weatherappcompose.ui.theme.WeatherAppComposeTheme
 
 class MainActivity : ComponentActivity() {

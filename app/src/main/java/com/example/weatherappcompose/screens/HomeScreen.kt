@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.screens.homescreen
+package com.example.weatherappcompose.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -21,14 +21,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.weatherappcompose.R
+import com.example.weatherappcompose.location.LocationService
+import com.example.weatherappcompose.location.LocationUtils
 import com.example.weatherappcompose.nav_graph.Route
+import com.example.weatherappcompose.ui.WeatherViewModel
 
 @Composable
 fun HomeScreen(
+    viewModel: WeatherViewModel,
     navController: NavController
 ){
     Box(
@@ -40,20 +45,21 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-
         Column(
             modifier = Modifier
                 .statusBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Card(
-                modifier = Modifier.fillMaxWidth().wrapContentSize(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentSize(),
                 onClick = { navController.navigate(Route.SearchedCity.route) },
                 colors = CardDefaults.cardColors(Color.Transparent)
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Center
-                ){
+                ) {
                     Text(text = "Search ")
                     Icon(
                         modifier = Modifier.size(30.dp),
@@ -63,6 +69,9 @@ fun HomeScreen(
                     )
                 }
             }
+
+            LocationService(viewModel = viewModel)
+
         }
     }
 }

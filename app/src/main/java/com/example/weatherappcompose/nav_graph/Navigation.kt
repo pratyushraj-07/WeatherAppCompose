@@ -9,8 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.weatherappcompose.screens.homescreen.HomeScreen
-import com.example.weatherappcompose.screens.searchedcityscreen.SearchedCity
+import com.example.weatherappcompose.screens.HomeScreen
+import com.example.weatherappcompose.screens.SearchedCity
 import com.example.weatherappcompose.ui.WeatherViewModel
 
 @Composable
@@ -25,7 +25,7 @@ fun Navigation(
             enterTransition = { slideInHorizontally() },
             exitTransition = { slideOutHorizontally(animationSpec = tween(500)) }
         ){
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, viewModel = viewModel)
         }
 
         composable(
