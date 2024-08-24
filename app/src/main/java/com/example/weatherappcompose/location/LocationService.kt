@@ -44,15 +44,12 @@ fun LocationService(
             if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
                 && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
             ){
+                locationUtils.requestLocation(viewModel)
                 Toast.makeText(context, "Permission granted", Toast.LENGTH_SHORT).show()
-
-                if (location != null) {
-                    viewModel.getCurWeather(location = location)
-                }
             }
 
             else{
-                val rationaleRequired =ActivityCompat.shouldShowRequestPermissionRationale(
+                val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
                     context as MainActivity,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) || ActivityCompat.shouldShowRequestPermissionRationale(
@@ -76,9 +73,12 @@ fun LocationService(
             )
         }else{
             locationUtils.requestLocation(viewModel)
-            if (location != null) {
-                viewModel.getCurWeather(location = location)
-            }
+        }
+    }
+
+    LaunchedEffect(location){
+        location?.let {
+            viewModel.getCurWeather(it)
         }
     }
 
@@ -92,7 +92,9 @@ fun LocationService(
                 text = result.error,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
-                modifier = Modifier.padding(25.dp).padding(top = 50.dp)
+                modifier = Modifier
+                    .padding(25.dp)
+                    .padding(top = 30.dp)
             )
         }
         ResponseState.Loading -> {
@@ -111,7 +113,7 @@ fun LocationService(
                     color = Color.Black
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(22.dp))
 
                 Text(text = "Trying to fetch weather", fontSize = 30.sp)
             }

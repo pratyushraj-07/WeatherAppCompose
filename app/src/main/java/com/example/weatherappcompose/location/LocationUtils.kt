@@ -31,7 +31,7 @@ class LocationUtils(
                 }
             }
         }
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000).build()
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 300000).build()
         _fusedLocationClient.requestLocationUpdates(locationRequest, locationCallBack, Looper.getMainLooper())
     }
 
