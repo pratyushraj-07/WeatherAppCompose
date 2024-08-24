@@ -72,7 +72,9 @@ fun LocationService(
                 )
             )
         }else{
-            locationUtils.requestLocation(viewModel)
+            if(location == null) {
+                locationUtils.requestLocation(viewModel)
+            }
         }
     }
 
