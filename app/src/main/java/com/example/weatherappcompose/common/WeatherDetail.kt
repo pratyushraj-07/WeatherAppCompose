@@ -16,12 +16,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.DefaultCameraDistance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -117,10 +121,11 @@ fun WeatherDetail(
                         modifier = Modifier.padding(top = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        WeatherIcon(iconCode = weather.weather.icon)
+                        WeatherIcon(iconCode = weather.weather.icon,
+                            modifier = Modifier.size(70.dp))
                         Text(
                             text = weather.weather.description,
-                            fontSize = 18.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -173,6 +178,12 @@ fun WeatherDetail(
                     )
                     WeatherCard(key = weather.clouds, name = "Cloud ", icon = R.drawable.cloud)
                 }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                HorizontalDivider(
+                    color = Color.DarkGray,
+                    thickness = 2.dp
+                )
             }
         }
     }
@@ -215,6 +226,11 @@ fun WeatherCard(
                 fontWeight = FontWeight.Bold
             )
         }
+        HorizontalDivider(
+            color = Color.DarkGray,
+            modifier = Modifier.padding(top = 2.dp),
+            thickness = 7.dp
+        )
     }
 }
 
