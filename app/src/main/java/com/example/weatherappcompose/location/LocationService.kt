@@ -35,7 +35,7 @@ fun LocationService(
 ){
     val context = LocalContext.current
     val location = viewModel.location.value
-    val weather by viewModel.weather.observeAsState()
+    val weather by viewModel.currentLocationWeather.observeAsState()
     val locationUtils = remember{LocationUtils(context)}
 
     val requestPermissionLauncher = rememberLauncherForActivityResult(
@@ -80,7 +80,9 @@ fun LocationService(
 
     LaunchedEffect(location){
         location?.let {
-            viewModel.getCurWeather(it)
+            if(weather !is ResponseState.Success){
+                viewModel.getCurWeather(it)
+            }
         }
     }
 
@@ -110,14 +112,19 @@ fun LocationService(
                     .fillMaxSize()
                     .padding(top = 50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                CircularProgressIndicator(
-                    color = Color.Black
-                )
+            ) {
+                if (!locationUtils.hasLocationPermission(context)) {
+                    Text(text = "Location permission is disabled. Enable it in your android settings to fetch weather")
+                } else {
 
-                Spacer(modifier = Modifier.height(22.dp))
+                    CircularProgressIndicator(
+                        color = Color.Black
+                    )
 
-                Text(text = "Trying to fetch weather", fontSize = 30.sp)
+                    Spacer(modifier = Modifier.height(22.dp))
+
+                    Text(text = "Trying to fetch weather", fontSize = 30.sp)
+                }
             }
         }
     }

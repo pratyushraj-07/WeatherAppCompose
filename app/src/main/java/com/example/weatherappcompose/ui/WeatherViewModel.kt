@@ -20,51 +20,54 @@ class WeatherViewModel(
     private val weatherApi2: WeatherApi2 = RetrofitInstance.api2
 ) : ViewModel() {
 
-    private val _weather = MutableLiveData<ResponseState<WeatherModel>>()
-    val weather : LiveData<ResponseState<WeatherModel>> = _weather
+    private val _searchedCityWeather = MutableLiveData<ResponseState<WeatherModel>>()
+    val searchedCityWeather : LiveData<ResponseState<WeatherModel>> = _searchedCityWeather
+
+    private val _currentLocationWeather = MutableLiveData<ResponseState<WeatherModel>>()
+    val currentLocationWeather: LiveData<ResponseState<WeatherModel>> = _currentLocationWeather
 
     private val _location = mutableStateOf<LocationData?>(null)
     val location : State<LocationData?> = _location
 
     fun getWeather(city: String){
-        _weather.value = ResponseState.Loading
+        _searchedCityWeather.value = ResponseState.Loading
         viewModelScope.launch {
             try {
                 val result = weatherApi.getWeather(city, Constant.APIKEY)
                 if (result.isSuccessful) {
                     Log.i("WeatherVM", "${result.body()}")
                     result.body()?.let {
-                        _weather.value = ResponseState.Success(it)
+                        _searchedCityWeather.value = ResponseState.Success(it)
                     }
                 } else {
-                    _weather.value = ResponseState.Error("Error: ${result.message()}")
+                    _searchedCityWeather.value = ResponseState.Error("Error: ${result.message()}")
                 }
             }catch (e:Exception){
-                _weather.value = ResponseState.Error("Error : ${e.message}")
+                _searchedCityWeather.value = ResponseState.Error("Error : ${e.message}")
             }
         }
     }
 
     fun getCurWeather(location: LocationData){
-        _weather.value = ResponseState.Loading
+        _currentLocationWeather.value = ResponseState.Loading
         viewModelScope.launch {
             try {
                 val result = weatherApi2.getCurWeather(latitude = location.latitude, longitude = location.longitude, apikey = Constant.APIKEY)
                 if(result.isSuccessful){
                     result.body()?.let {
-                        _weather.value = ResponseState.Success(it)
+                        _currentLocationWeather.value = ResponseState.Success(it)
                     }
                 }else{
-                    _weather.value = ResponseState.Error("Error : ${result.message()}")
+                    _currentLocationWeather.value = ResponseState.Error("Error : ${result.message()}")
                 }
             }catch (e:Exception){
-                _weather.value = ResponseState.Error("Error : ${e.message}")
+                _currentLocationWeather.value = ResponseState.Error("Error : ${e.message}")
             }
         }
     }
 
     fun resetWeather(){
-        _weather.value = ResponseState.Empty
+        _searchedCityWeather.value = ResponseState.Empty
     }
 
     fun getLocation(location:LocationData){

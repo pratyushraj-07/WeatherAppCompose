@@ -49,7 +49,7 @@ fun SearchedCity(
     navController: NavController,
     viewModel: WeatherViewModel
 ) {
-    val weather by viewModel.weather.observeAsState()
+    val weather by viewModel.searchedCityWeather.observeAsState()
     var city by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
