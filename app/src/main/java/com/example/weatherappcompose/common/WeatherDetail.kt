@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -125,15 +126,13 @@ fun WeatherDetail(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(80.dp))
 
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 10.dp, end = 10.dp),
-                //border = BorderStroke(width = 3.dp, color = Color.LightGray),
-                //colors = CardDefaults.cardColors(Color.Transparent)
-                colors = CardDefaults.cardColors(Color.DarkGray)
+                    .padding(start = 6.dp, end = 6.dp),
+                colors = CardDefaults.cardColors(colorResource(id = R.color.Aquamarine))
             ) {
                 Row(
                     modifier = Modifier
@@ -187,10 +186,8 @@ fun WeatherCard(
 ) {
     Card(
         modifier = Modifier.size(90.dp),
-        //colors = CardDefaults.cardColors(colorResource(id = R.color.Aquamarine)),
-        colors = CardDefaults.cardColors(Color.Transparent),
-        shape = RoundedCornerShape(8.dp),
-        //border = BorderStroke(width = 3.dp, color = Color.Gray)
+        colors = CardDefaults.cardColors(colorResource(id = R.color.Aquamarine)),
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column(
             modifier = Modifier

@@ -1,6 +1,6 @@
 package com.example.weatherappcompose.screens
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,11 +34,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.weatherappcompose.R
 import com.example.weatherappcompose.common.Lottie
 import com.example.weatherappcompose.common.WeatherDetail
 import com.example.weatherappcompose.ui.ResponseState
@@ -67,8 +71,13 @@ fun SearchedCity(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Gray)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.bgsunset),
+            contentDescription = "",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop)
+
         Column(
             modifier = Modifier
                 .statusBarsPadding(),
@@ -95,7 +104,7 @@ fun SearchedCity(
                     maxLines = 1,
                     onValueChange = { city = it },
                     shape = RoundedCornerShape(28.dp),
-                    placeholder = { Text(text = "Search City", color = Color.Black) },
+                    placeholder = { Text(text = "Search City", color = Color.Black, fontWeight = FontWeight.SemiBold) },
                     trailingIcon = {
                         Row {
                             IconButton(onClick = { city = "" }) {
@@ -122,7 +131,8 @@ fun SearchedCity(
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Black,
                         focusedTextColor = Color.Black,
-                        unfocusedLabelColor = Color.Black
+                        unfocusedLabelColor = Color.Black,
+                        focusedContainerColor = colorResource(id = R.color.Aquamarine)
                     )
                 )
             }
