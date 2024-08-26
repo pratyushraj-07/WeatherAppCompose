@@ -4,6 +4,7 @@ import android.Manifest
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -110,11 +111,12 @@ fun LocationService(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 50.dp),
+                    .padding(top = 50.dp, start = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (!locationUtils.hasLocationPermission(context)) {
-                    Text(text = "Location permission is disabled. Enable it in your android settings to fetch weather")
+                    Text(text = "Location permission is disabled. Enable it in your android settings to fetch weather.",
+                        fontSize = 22.sp)
                 } else {
 
                     CircularProgressIndicator(
