@@ -107,7 +107,11 @@ fun SearchedCity(
                     placeholder = { Text(text = "Search City", color = Color.Black, fontWeight = FontWeight.SemiBold) },
                     trailingIcon = {
                         Row {
-                            IconButton(onClick = { city = "" }) {
+                            IconButton(onClick = {
+                                city = ""
+                                viewModel.resetWeather()
+                                keyboardController!!.show()
+                            }) {
                                 Icon(
                                     imageVector = Icons.Default.Clear,
                                     contentDescription = "Clear",
