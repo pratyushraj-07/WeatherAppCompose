@@ -37,7 +37,7 @@ To run this project locally:
    - Open the `local.properties` file in your project root.
    - Add your Weatherbit API key:
      ```
-     WEATHER_API_KEY=your_api_key_here
+     apikey=your_api_key_here
      ```
 
 3. **Build and Run the project** in Android Studio.
