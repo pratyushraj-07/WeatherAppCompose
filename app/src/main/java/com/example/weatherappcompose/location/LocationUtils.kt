@@ -15,7 +15,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 
 class LocationUtils(
-    private val context: Context
+    context: Context
 ){
     private val _fusedLocationClient :FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
